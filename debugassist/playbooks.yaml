@@ -1,0 +1,125 @@
+import_error:
+  checklist:
+    - "Install the missing package: python -m pip install <module>"
+    - "Confirm you are using the correct interpreter / virtual environment"
+    - "Run: python -m pip show <module> to verify install"
+    - "Restart your IDE/kernel after installing packages"
+    - "Avoid naming your file the same as a library (e.g., requests.py, numpy.py)"
+  keyword_tips:
+    "no module named":
+      - "If using venv: activate it, then reinstall dependencies inside that venv"
+      - "In VS Code: select the correct Python interpreter (Command Palette → Python: Select Interpreter)"
+    "cannot import name":
+      - "Check the package version: the symbol may not exist in your installed version"
+      - "Search for circular imports (A imports B, B imports A)"
+
+syntax_error:
+  checklist:
+    - "Check the indicated line for missing ':', ')', ']', or quotes"
+    - "Comment out recent changes to isolate the exact syntax issue"
+    - "Run a formatter (black) or linter to find the problematic line"
+    - "Verify indentation consistency (4 spaces, avoid mixed tabs/spaces)"
+  keyword_tips:
+    "indentationerror":
+      - "Convert tabs to spaces and re-indent the block"
+      - "Ensure all lines inside a block align at the same indentation level"
+    "unexpected indent":
+      - "Look for stray spaces/tabs at the beginning of the line"
+
+type_error:
+  checklist:
+    - "Print variable types with type(x) near the failing line"
+    - "Check function signatures and ensure you pass correct argument types"
+    - "Convert values explicitly (int/float/str) where needed"
+    - "Watch for shadowing built-ins (list, dict, str) with variable names"
+  keyword_tips:
+    "not callable":
+      - "You may have overwritten a function name with a variable; rename the variable"
+    "unsupported operand type":
+      - "Convert operands to compatible types before using +, -, *, / (e.g., int(x), str(x))"
+    "has no len()":
+      - "The object may be None or not a collection; ensure it’s initialized correctly"
+
+value_error:
+  checklist:
+    - "Validate inputs before casting/parsing (strip whitespace, check format)"
+    - "Wrap parsing in try/except and handle invalid inputs gracefully"
+    - "Print the input value right before the failing conversion"
+    - "Verify list operations (remove) only target values that exist"
+  keyword_tips:
+    "invalid literal for int()":
+      - "Ensure the string is numeric before calling int(); use s.isdigit() if appropriate"
+    "could not convert string to float":
+      - "Remove commas/extra characters; confirm decimal format"
+    "list.remove(x): x not in list":
+      - "Use: if x in my_list: my_list.remove(x)"
+
+attribute_error:
+  checklist:
+    - "Print the object and its type right before the failing line"
+    - "Check spelling of the attribute/method name"
+    - "If the object may be None, add a guard condition before calling methods"
+    - "Confirm you’re using the right object (e.g., dict vs list vs custom class)"
+  keyword_tips:
+    "has no attribute":
+      - "Verify the object is the expected type and contains that method/field"
+    "nonetype":
+      - "Trace where the variable becomes None; ensure the function returns a value"
+
+key_error:
+  checklist:
+    - "Print available keys (dict.keys()) and confirm the key exists"
+    - "Use dict.get(key, default) if missing keys are expected"
+    - "Normalize key formatting (case, whitespace)"
+    - "Validate upstream data shape (API response / JSON fields) before indexing"
+  keyword_tips:
+    "keyerror":
+      - "If the key comes from user input, validate it before dictionary access"
+    "failed to process request":
+      - "If logs only show the key (e.g., 'user_id'), treat it as a missing dict key and inspect upstream data"
+
+index_error:
+  checklist:
+    - "Print len(list) before indexing to confirm bounds"
+    - "Check loop boundaries for off-by-one errors"
+    - "Handle empty lists before accessing elements"
+    - "Prefer safe iteration (for item in items) when possible"
+  keyword_tips:
+    "list index out of range":
+      - "If indexing by i, ensure i < len(list)"
+      - "If popping/removing items in a loop, re-check indexing logic"
+
+file_error:
+  checklist:
+    - "Print the absolute path and current working directory (os.getcwd())"
+    - "Confirm the file exists at the path you’re using"
+    - "Use pathlib.Path to build paths safely across OSes"
+    - "Check read/write permissions for the target directory"
+  keyword_tips:
+    "filenotfounderror":
+      - "If using a relative path, confirm where the script is being run from"
+    "permissionerror":
+      - "Write to a user-writable directory or adjust file permissions"
+
+zero_division:
+  checklist:
+    - "Guard denominators: if denom == 0: handle it"
+    - "Validate inputs and data cleaning so zeros don’t slip into divisors"
+    - "Add logging/prints to see how the divisor becomes zero"
+  keyword_tips:
+    "division by zero":
+      - "Check calculations that produce the divisor (counts, lengths, averages)"
+
+connection_error:
+  checklist:
+    - "Verify the URL/host is reachable (try ping/curl/browser)"
+    - "Check DNS and proxy settings if on a restricted network"
+    - "Add timeouts and retries with exponential backoff"
+    - "Confirm the server/service is running and listening on the expected port"
+  keyword_tips:
+    "read timed out":
+      - "Increase timeout; check server load; add retries"
+    "connection refused":
+      - "The service may be down or port blocked; confirm host/port and firewall rules"
+    "timeout":
+      - "Check network stability and server responsiveness; use smaller payloads if applicable"

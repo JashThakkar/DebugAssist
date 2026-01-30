@@ -1,0 +1,21 @@
+Make env:
+python3 -m venv .venv
+/
+python -m venv .venv
+
+Active:
+mac/lnx: source .venv/bin/activate
+win: .venv\Scripts\Activate.ps1
+
+Get Deps:
+pip install -r requirements.txt
+
+Make Syn Dataset:
+python3 -m debugassist.build_dataset --total (rec size 500 - 1500 as an int)
+python3 -m debugassist.build_dataset --per-class (rec size 50 - 150)
+
+Train ML model:
+python3 -m debugassist.train
+
+Run tool:
+python3 -m debugassist.predict --text "Your Error"
